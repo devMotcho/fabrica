@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views.generic import ListView
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.forms import formset_factory
 from django.forms.models import modelformset_factory
 
@@ -11,6 +12,7 @@ from .forms import ProductForm, ProductionForm, BaseProductionFormSet
 
 
 # Produtos
+
 class ProductListView(ListView):
     model = Product
     template_name = 'products/products.html'
@@ -41,6 +43,7 @@ class ProductListView(ListView):
             messages.error(request, 'Create Product failed!', "alert-danger alert-dismissible")
         return self.get(request, *args, **kwargs)
 
+@login_required(login_url='users:login')
 def deleteProduct(request, pk):
     product = Product.objects.get(id=pk)
     if request.method == 'POST':
@@ -49,6 +52,7 @@ def deleteProduct(request, pk):
         return redirect('products:products')
     return render(request, 'products/delete.html', {'obj': product})
 
+@login_required(login_url='users:login')
 def updateProduct(request, pk):
     product = Product.objects.get(id=pk)
     form = ProductForm(instance=product)
@@ -67,6 +71,7 @@ def updateProduct(request, pk):
     return render(request, 'products/update.html', context)
 
 # Inventario
+@login_required(login_url='users:login')
 def viewInventary(request):
     q = request.GET.get('q') if request.GET.get('q') is not None else ''
     inv = Inventary.objects.filter(
@@ -82,6 +87,7 @@ def viewInventary(request):
 
 
 # Produção
+@login_required(login_url='users:login')
 def viewProduction(request):
     q = request.GET.get('q') if request.GET.get('q') is not None else ''
 
@@ -110,6 +116,7 @@ def viewProduction(request):
 
     return render(request, 'products/production.html', context)
 
+@login_required(login_url='users:login')
 def editProduction(request, pk):
     production = Production.objects.get(id=pk)
     form = ProductionForm(instance=production)
