@@ -1,0 +1,64 @@
+{% extends 'main.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+
+
+<div class="container">
+    <div class="row text-center">
+        <h2> Products </h2>
+    </div>
+    <div class="row my-4">
+        <div class="col-md-4 ">
+            <!-- Adicionar dados form-->
+            <div class="border bg-white p-4">
+                <h4>Add Products</h4>
+                <hr>
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group my-2">
+                        {{ form | crispy }}
+                    </div>
+                
+                
+                    <input class="btn btn-outline-dark btn-block my-2" type="submit" value="Add products....">
+                </form>
+
+            </div>
+        </div>
+        <!-- Table start-->
+        <div class="col-md-8">
+            <table class="table bg-white">
+                <thead class="thead-dark">
+                <tr class="table-dark">
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Activity</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for obj in object_list %}
+                <tr>
+                    <th scope="row">{{obj.id}}</th>
+                    <td>{{obj.name}}</td>
+                    <td>{{obj.category}}</td>
+                    <td>{{obj.price}} euros</td>
+                    <td>
+                        <a class='btn btn-dark btn-sm' href="{% url 'products:update' obj.id %}">Edit</a>
+                        <a class='btn btn-danger btn-sm' href="{% url 'products:delete' obj.id %}">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <!-- Table end-->
+    </div>
+</div>
+
+
+
+
+{% endblock content %}

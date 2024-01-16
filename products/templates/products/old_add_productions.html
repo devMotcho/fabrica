@@ -1,0 +1,50 @@
+<h3>Add Productions</h3>
+<div id="form_set">
+    <form method="post" action="{% url 'products:productions' %}">
+        {% csrf_token %}
+        {{ formset.management_form }}
+        <table class='table' id="production_table">
+            <thead class="thread-dark">
+                <tr>
+                    <th scope="col">Date</th>
+                    <th scope="col">Product</th>
+                    <th scope="col">Operator</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Hours</th>
+                </tr>
+            </thead>
+            <tbody id="inlineform">
+                {% for form in formset %}
+                    <tr class="form-row">
+                        <td>{{ form.date }}</td>
+                        <td>{{ form.product }}</td>
+                        <td>{{ form.operator }}</td>
+                        <td>{{ form.quantity }}</td>
+                        <td>{{ form.hours_taken }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <input type="button" value="Add More" id="add_more">
+        <input type="submit" value="Save Productions">
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Função para clonar a primeira linha e adicionar à tabela
+        function cloneRow() {
+            var row = $(".form-row:first").clone(true);  // true para clonar também os eventos
+            row.find('input').val('');  // Limpar os valores dos campos
+            $("#inlineform").append(row);
+        }
+
+        // Manipulador de evento para o botão "Add More"
+        $("#add_more").on('click', function() {
+            cloneRow();
+        });
+    });
+</script>
+

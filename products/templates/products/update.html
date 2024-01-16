@@ -1,0 +1,29 @@
+{% extends 'main.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="content p-2">
+    <div class="row mt-4">
+        <div class="col-sm4">
+            <div class="card text-center">
+                <div class="card-header bg-dark text-white">
+                    {{product.name}}
+                </div>
+                <form class="form" action="" method="POST">
+                    {% csrf_token %}
+                    <div class="card-body my-2">
+                        {{form | crispy}}
+                        <input class="btn btn-outline-dark btn-block my-4" type="submit" value="Confirm">
+                        <a href="{{request.META.HTTP_REFERER}}" class="btn btn-outline-dark btn-block">No, go back!</a>
+                        </div>
+                        <div class="card-footer text-body-secondary">
+                        >...
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}

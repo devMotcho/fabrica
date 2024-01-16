@@ -1,0 +1,139 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<div class="container">
+    <div class="row text-center">
+        <h2>Inventary</h2>
+    </div>
+    <div class="row my-4">
+            <!-- Table start-->
+            <div class="col-ms-2">
+                <table class="table bg-white">
+                    <thead class="thead-dark">
+                    <tr class="table-dark">
+                        <th scope="col">#</th>
+                        <th scope="col">Product</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Activity</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for obj in inv %}
+                    <tr>
+                        <th scope="row">{{obj.id}}</th>
+                        <td>{{obj.product.name}}</td>
+                        <td>{{obj.total_quantity}}</td>
+                        <td class="text-center">
+                            <a class='btn btn-outline-success btn-sm' href="">View</a>
+                        </td>
+                    </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+            <!-- Table end-->
+</div>
+
+    <!-- Graphs-->
+        <!-- First-->
+        <div class="container">
+            <div class="row my-5">
+                <div class="col-md-6">
+                    <div class="bg-white">
+                        <canvas id="myChart1" width="400" height="300"></canvas>
+                        <script>
+                            var ctx = document.getElementById('myChart1').getContext('2d');
+                            var myChart1 = new Chart(ctx, {
+                                type: 'pie',
+                                data: {
+                                    labels: [{% for obj in inv %} '{{obj.product.name}}', {% endfor %}],
+                                    datasets: [{
+                                        label: 'Products',
+                                        data: [{% for obj in inv %} '{{obj.total_quantity}}', {% endfor %}],
+                                        backgroundColor: [
+                                            'rgba(255, 99, 132, 0.6)',
+                                            'rgba(255, 159, 64, 0.6)',
+                                            'rgba(255, 205, 86, 0.6)',
+                                            'rgba(75, 192, 192, 0.6)',
+                                            'rgba(54, 162, 235, 0.6)',
+                                            'rgba(153, 102, 255, 0.6)',
+                                            'rgba(201, 203, 207, 0.6)'
+                                        ],
+                                        borderColor: [
+                                            'rgb(255, 99, 132, 0.6)',
+                                            'rgb(255, 159, 64, 0.6)',
+                                            'rgb(255, 205, 86, 0.6)',
+                                            'rgb(75, 192, 192, 0.6)',
+                                            'rgb(54, 162, 235, 0.6)',
+                                            'rgb(153, 102, 255, 0.6)',
+                                            'rgb(201, 203, 207, 0.6)'
+                                        ],
+                                        borderWidth: 1
+                                    }]
+                                },
+                                options: {
+                                    scales: {
+                                        yAxes: [{
+                                            ticks: {
+                                                beginAtZero: true
+                                            }
+                                        }]
+                                    }
+                                }
+                            });
+                        </script>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="bg-white">
+                        <canvas id="myChart2" width="400" height="300"></canvas>
+                        <script>
+                            var ctx = document.getElementById('myChart2').getContext('2d');
+                            var myChart2 = new Chart(ctx, {
+                                type: 'bar',
+                                data: {
+                                    labels: [{% for obj in inv %} '{{obj.product.name}}', {% endfor %}],
+                                    datasets: [{
+                                        label: 'Products',
+                                        data: [{% for obj in inv %} '{{obj.total_quantity}}', {% endfor %}],
+                                        backgroundColor: [
+                                            'rgba(255, 99, 132, 0.6)',
+                                            'rgba(255, 159, 64, 0.6)',
+                                            'rgba(255, 205, 86, 0.6)',
+                                            'rgba(75, 192, 192, 0.6)',
+                                            'rgba(54, 162, 235, 0.6)',
+                                            'rgba(153, 102, 255, 0.6)',
+                                            'rgba(201, 203, 207, 0.6)'
+                                        ],
+                                        borderColor: [
+                                            'rgb(255, 99, 132, 0.6)',
+                                            'rgb(255, 159, 64, 0.6)',
+                                            'rgb(255, 205, 86, 0.6)',
+                                            'rgb(75, 192, 192, 0.6)',
+                                            'rgb(54, 162, 235, 0.6)',
+                                            'rgb(153, 102, 255, 0.6)',
+                                            'rgb(201, 203, 207, 0.6)'
+                                        ],
+                                        borderWidth: 1
+                                    }]
+                                },
+                                options: {
+                                    scales: {
+                                        yAxes: [{
+                                            ticks: {
+                                                beginAtZero: true
+                                            }
+                                        }]
+                                    }
+                                }
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <!-- End Graphs -->
+
+
+{% endblock content %}

@@ -1,0 +1,17 @@
+* {
+    /*font-family: "Lucida Console", "Courier New", monospace; */
+    font-family: "Menlo", "Monaco", "Consolas", "Courier New", monospace;
+    padding: 0;
+    text-rendering: optimizeLegibility;
+
+}
+body {
+    background-color: rgb(230, 227, 227);
+}
+
+
+.my-card:hover{
+    transform: scale(1.1);
+    transition: 0.2s ease-in-out;
+}
+
